@@ -1,0 +1,14 @@
+.CheckBox {
+    display: inline-block;
+    background-color: lightgray;
+    border-radius: 3px;
+    padding: 2px;
+    margin: 2px;
+}
+.CheckBox-checked {
+    color: green;
+}
+
+.CheckBox-unchecked {
+    color: white;
+}
