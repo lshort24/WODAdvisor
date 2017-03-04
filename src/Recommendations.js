@@ -1,7 +1,8 @@
 import React from 'react';
 import * as controller from './WODAdvisorController';
 import * as dataManager from './DataManager';
-import CheckBox from './CheckBox';
+import CheckBoxButton from './CheckBoxButton';
+import {Panel} from 'react-bootstrap';
 
 class Recommendations extends React.Component {
    constructor() {
@@ -40,23 +41,26 @@ class Recommendations extends React.Component {
 
       return (
          <div>
-            <h2>Workout of the Day</h2>
-            {wod.map(exercise =>
-               <div key={exercise.id}>
-                  <span>{exercise.name}</span>
-               </div>
-            )}
-            <h2>Recommendations</h2>
-            {recommendations.map(entry =>
-               <div key={entry.id}>
-                  <CheckBox update={this.update.bind(this, entry.exercise.id)}
-                            checked={this.state.wod.find(exercise => exercise.id === entry.exercise.id)} />
-                  {entry.exercise.name}&nbsp;
-                  {entry.exercise.bodyParts.map(tag =>
-                     <span key={tag.id}>{tag.name}&nbsp;</span>
-                  )}
-               </div>
-            )}
+            <Panel header="Workout of the Day">
+               {wod.map(exercise =>
+                  <div key={exercise.id}>
+                     <span>{exercise.name}</span>
+                  </div>
+               )}
+            </Panel>
+
+            <Panel header="Recommendations">
+               {recommendations.map(entry =>
+                  <div key={entry.id}>
+                     <CheckBoxButton update={this.update.bind(this, entry.exercise.id)}
+                                     checked={this.state.wod.find(exercise => exercise.id === entry.exercise.id)} />
+                     {entry.exercise.name}&nbsp;
+                     {entry.exercise.bodyParts.map(tag =>
+                        <span key={tag.id}>{tag.name}&nbsp;</span>
+                     )}
+                  </div>
+               )}
+            </Panel>
          </div>
       )
    }
