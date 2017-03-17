@@ -38,15 +38,26 @@ class Recommendations extends React.Component {
    render() {
       let recommendations = this.state.recommendations;
       let wod = this.state.wod;
-
+      
+      let wod_html = '';
+      if (wod.length == 0) {
+         wod_html = <div>Select some exercises from the list below</div>
+      }
+      else {
+         wod_html = wod.map(exercise =>
+            <div key={exercise.id}>
+               <span>{exercise.name}</span>&nbsp;
+               {exercise.bodyParts.map(bodyPart =>
+                  <span key={bodyPart.id} className="badge" style={{backgroundColor: bodyPart.color}}>{bodyPart.name}</span>
+               )}
+            </div>
+         )
+      }
+   
       return (
          <div>
             <Panel header="Workout of the Day">
-               {wod.map(exercise =>
-                  <div key={exercise.id}>
-                     <span>{exercise.name}</span>
-                  </div>
-               )}
+               {wod_html}
             </Panel>
 
             <Panel header="Recommendations">

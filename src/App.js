@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
 import Recommendations from './Recommendations';
 import {Col, Grid, PageHeader, Row } from 'react-bootstrap';
+import "./App.css";
 
+/* global render */
 class App extends Component {
+   //noinspection JSMethodCanBeStatic
    render() {
       return (
          <Grid>

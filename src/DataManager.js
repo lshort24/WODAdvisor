@@ -12,7 +12,8 @@ export let getBodyPartById = function(id) {
 
    return {
       id: id,
-      name: bodyPartRecord[1]
+      name: bodyPartRecord[1],
+      color: bodyPartRecord[2]
    }
 };
 

@@ -13,15 +13,15 @@ export const exercises = [
 ];
 
 export const bodyParts = [
-   [1, 'shoulders'],
-   [2, 'lower-back'],
-   [3, 'quads'],
-   [4, 'abs'],
-   [5, 'triceps'],
-   [6, 'upper-back'],
-   [7, 'chest'],
-   [8, 'back'],
-   [9, 'arms']
+   [1, 'shoulders',  '#f45628'], /* orange */
+   [2, 'lower-back', '#3c38e8'], /* royal blue */
+   [3, 'quads',      '#b2515b'], /* rose */
+   [4, 'abs',        '#c11c59'], /* berry */
+   [5, 'triceps',    '#630436'], /* magenta */
+   [6, 'upper-back', '#395992'], /* slate blue */
+   [7, 'chest',      '#f8829e'], /* pink */
+   [8, 'back',       '#074739'], /* dark green */
+   [9, 'arms',       '#986435']  /* brown */
 ];
 
 export const exerciseBodyPart = [
