@@ -23,7 +23,7 @@ class CheckBoxButton extends React.Component {
 
    render() {
       let className = (this.state.checked ? 'CheckBoxButton-checked' : 'CheckBoxButton-unchecked');
-      return <Button aria-label="Add to WOD" onClick={this.update.bind(this)} className="CheckBoxButton">
+      return <Button type="button" aria-label="Add to WOD" onClick={this.update.bind(this)} className="CheckBoxButton">
          <span className={'glyphicon glyphicon-ok ' + className} />
       </Button>
    }

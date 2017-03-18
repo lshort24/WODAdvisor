@@ -40,7 +40,7 @@ class Recommendations extends React.Component {
       let wod = this.state.wod;
       
       let wod_html = '';
-      if (wod.length == 0) {
+      if (wod.length === 0) {
          wod_html = <div>Select some exercises from the list below</div>
       }
       else {
@@ -66,8 +66,8 @@ class Recommendations extends React.Component {
                      <CheckBoxButton update={this.update.bind(this, entry.exercise.id)}
                                      checked={this.state.wod.find(exercise => exercise.id === entry.exercise.id)} />
                      {entry.exercise.name}&nbsp;
-                     {entry.exercise.bodyParts.map(tag =>
-                        <span key={tag.id}>{tag.name}&nbsp;</span>
+                     {entry.exercise.bodyParts.map(bodyPart =>
+                        <span key={bodyPart.id} className="badge" style={{backgroundColor: bodyPart.color}}>{bodyPart.name}&nbsp;</span>
                      )}
                   </div>
                )}

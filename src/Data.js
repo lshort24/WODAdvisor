@@ -9,7 +9,10 @@ export const exercises = [
    [8, 'Pull-ups'],
    [9, 'Push-ups'],
    [10, 'Squats'],
-   [11, 'Cleans']
+   [11, 'Cleans'],
+   [12, 'Rowing'],
+   [13, 'Kettle Bell Swings'],
+   [14, 'Hamstring Pulls']
 ];
 
 export const bodyParts = [
@@ -21,7 +24,9 @@ export const bodyParts = [
    [6, 'upper-back', '#395992'], /* slate blue */
    [7, 'chest',      '#f8829e'], /* pink */
    [8, 'back',       '#074739'], /* dark green */
-   [9, 'arms',       '#986435']  /* brown */
+   [9, 'arms',       '#986435'], /* brown */
+   [10, 'core',      '#00bfff'], /* aqua */
+   [11, 'hamstrings','#483D8B']  /* purple */
 ];
 
 export const exerciseBodyPart = [
@@ -39,7 +44,10 @@ export const exerciseBodyPart = [
    [9, 9],
    [10, 3],
    [11, 8],
-   [11, 9]
+   [11, 9],
+   [12, 8],
+   [13, 10],
+   [14, 11]
 ];
 
 export const history = [
@@ -57,7 +65,13 @@ export const history = [
    [12, '2017-02-18', 10],
    [13, '2017-02-18', 11],
    [14, '2017-02-18', 2],
-   [15, '2017-02-18', 4]
+   [15, '2017-02-18', 4],
+   [16, '2017-03-11', 10],
+   [17, '2017-03-11', 12],
+   [18, '2017-03-11', 13],
+   [19, '2017-03-18', 6],
+   [20, '2017-03-18', 14],
+   [21, '2017-03-18', 9],
 ];
 
-export const wod = [ 7, 8, 9 ];
+export const wod = [ ];
