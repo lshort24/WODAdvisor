@@ -64,24 +64,3 @@ export let getHistoryById = function(id) {
 export let getHistory = function() {
    return data.history;
 };
-
-export let getWOD = function() {
-   return data.wod.map((exerciseId) => {
-      return getExerciseById(exerciseId);
-   });
-};
-
-/*
-export let addExerciseToWOD = function(exerciseId) {
-   if (data.wod.indexOf(exerciseId) < 0) {
-      data.wod.push(exerciseId);
-   }
-};
-
-export let removeExerciseFromWOD = function(exerciseId) {
-   let index = data.wod.indexOf(exerciseId);
-   if (index >= 0) {
-      data.wod = data.wod.slice(index, index+1);
-   }
-};
-*/
