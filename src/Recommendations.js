@@ -1,6 +1,5 @@
 import React from 'react';
 import * as dataManager from './DataManager';
-import * as WODManager from './WODManager';
 import CheckBoxButton from './CheckBoxButton';
 import {Panel} from 'react-bootstrap';
 import Moment from "moment";
@@ -16,17 +15,17 @@ class Recommendations extends React.Component {
     }
 
     componentWillMount() {
-        this.setState({wod: this.props.wodManager.getWOD()}); 
+        this.setState({wod: dataManager.getWOD()}); 
     }
     
     update(exerciseId, checked) {
         if (checked) {
-            this.props.wodManager.add(exerciseId);
+            dataManager.addToWOD(exerciseId);
         }
         else {
-            this.props.wodManager.remove(exerciseId);
+            dataManager.removeFromWOD(exerciseId);
         }
-        this.setState({wod: this.props.wodManager.getWOD()});
+        this.setState({wod: dataManager.getWOD()});
     }
 
 

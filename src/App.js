@@ -1,17 +1,12 @@
 import React, {Component} from 'react';
 import WorkoutOfTheDay from './WorkoutOfTheDay';
 import Recommendations from './Recommendations';
-import WODManager from './WODManager';
 import {Col, Grid, PageHeader, Row } from 'react-bootstrap';
 import "./App.css";
 
 /* global render */
 class App extends Component {
-    constructor() {
-        super();
-        this.wodManager = new WODManager;
-    }
-    
+    //noinspection JSMethodCanBeStatic
     render() {
         return (
             <Grid>
@@ -19,10 +14,10 @@ class App extends Component {
                     <Col sm={12}><PageHeader>WOD Advisor</PageHeader></Col>
                 </Row>
                 <Row className="show-grid">
-                    <Col sm={12}><WorkoutOfTheDay wodManager={this.wodManager}/></Col>
+                    <Col sm={12}><WorkoutOfTheDay/></Col>
                 </Row>
                 <Row className="show-grid">
-                    <Col sm={12}><Recommendations wodManager={this.wodManager}/></Col>
+                    <Col sm={12}><Recommendations/></Col>
                 </Row>
             </Grid>
         );

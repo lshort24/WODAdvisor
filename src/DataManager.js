@@ -1,4 +1,5 @@
 import * as data from './Data';
+import Events from './Events';
 import Moment from "moment";
 
 export let getBodyPartById = function(id) {
@@ -63,4 +64,25 @@ export let getHistoryById = function(id) {
 
 export let getHistory = function() {
    return data.history;
+};
+
+export let getWOD = function() {
+   return data.workoutOfTheDay.map((exerciseId) => {
+      return getExerciseById(exerciseId);
+   });
+};
+
+export let addToWOD = function(exerciseId) {
+   if (data.workoutOfTheDay.indexOf(exerciseId) < 0) {
+      data.workoutOfTheDay.push(exerciseId);
+      Events.trigger('wodChange', data.workoutOfTheDay);
+   }
+};
+
+export let removeFromWOD = function(exerciseId) {
+   let index = data.workoutOfTheDay.indexOf(exerciseId);
+   if (index >= 0) {
+      data.workoutOfTheDay.splice(index, 1);
+      Events.trigger('wodChange', data.workoutOfTheDay);
+   }
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import {Panel} from 'react-bootstrap';
 import * as dataManager from './DataManager';
+import Events from './Events';
 
 class WorkoutOfTheDay extends React.Component {
     constructor() {
@@ -9,14 +10,16 @@ class WorkoutOfTheDay extends React.Component {
         this.state = {
             wod: []
         };
+        
+        this.events = new Events();
     }
     
     componentWillMount() {
-        let wod = this.props.wodManager.getWOD();   
+        let wod = dataManager.getWOD();   
         this.setState({wod: wod});
         
         let me = this;
-        this.props.wodManager.on('change', 'WorkoutOfTheDay', (wod) => {
+        this.events.on('wodChange', (wod) => {
             me.setState({wod: wod});            
         });
     }
