@@ -73,5 +73,3 @@ export const history = [
    [20, '2017-03-18', 14],
    [21, '2017-03-18', 9]
 ];
-
-export var workoutOfTheDay = [];

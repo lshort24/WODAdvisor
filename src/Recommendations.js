@@ -45,7 +45,7 @@ class Recommendations extends React.Component {
             return (
                 <div key={entry.id}>
                     <CheckBoxButton update={this.update.bind(this, entry.exercise.id)}
-                                    checked={this.state.wod.find(exercise => exercise.id === entry.exercise.id)}/>
+                                    checked={this.state.wod.find(exercise_id => exercise_id === entry.exercise.id)}/>
                     {entry.exercise.name}&nbsp;
                     {entry.exercise.bodyParts.map(bodyPart =>
                         <span key={bodyPart.id} className="badge"

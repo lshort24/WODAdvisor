@@ -35,11 +35,11 @@ body {
 }
 
 .CheckBoxButton-checked {
-    color: green;
+    color: lightgray;
 }
 
 .CheckBoxButton-unchecked {
-    color: lightgray;
+    color: transparent;
 }
 
 .badge {

@@ -15,8 +15,9 @@ class WorkoutOfTheDay extends React.Component {
     }
     
     componentWillMount() {
-        let wod = dataManager.getWOD();   
-        this.setState({wod: wod});
+        this.setState({
+            wod: dataManager.getWOD()
+        });
         
         let me = this;
         this.events.on('wodChange', (wod) => {
