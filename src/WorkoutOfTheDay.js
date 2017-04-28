@@ -1,5 +1,5 @@
 import React from 'react';
-import {Panel} from 'react-bootstrap';
+import {Panel, Button} from 'react-bootstrap';
 import * as dataManager from './DataManager';
 import Events from './Events';
 
@@ -19,9 +19,8 @@ class WorkoutOfTheDay extends React.Component {
             wod: dataManager.getWOD()
         });
         
-        let me = this;
         this.events.on('wodChange', (wod) => {
-            me.setState({wod: wod});            
+            this.setState({wod: wod});            
         });
     }
     
@@ -34,22 +33,37 @@ class WorkoutOfTheDay extends React.Component {
         )
     } 
     
+    save() {
+        dataManager.saveWorkout(this.state.wod); 
+    }
+
     _getWOD() {
         if (this.state.wod.length === 0) {
-            return(<div>Select some exercises from the list below</div>);
+            return (<div>Select some exercises from the list below</div>);
         }
-        
-        return this.state.wod.map((exercise_id) => {
+
+        let wod = this.state.wod.map((exercise_id) => {
             let exercise = dataManager.getExerciseById(exercise_id);
             return (
                 <div key={exercise.id}>
                     <span>{exercise.name}</span>&nbsp;
                     {exercise.bodyParts.map(bodyPart =>
-                        <span key={bodyPart.id} className="badge" style={{backgroundColor: bodyPart.color}}>{bodyPart.name}</span>
+                        <span key={bodyPart.id} className="badge"
+                              style={{backgroundColor: bodyPart.color}}>{bodyPart.name}</span>
                     )}
                 </div>
             );
-        });        
+        });
+
+        return <div>
+            {wod}
+            <Button bsStyle="primary" 
+                    bsSize="small" 
+                    style={{float: 'right'}}
+                    onClick={this.save.bind(this)}>
+                Save Workout
+            </Button>
+        </div>
     }
 }
 

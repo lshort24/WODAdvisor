@@ -27,18 +27,18 @@ body {
 }
 
 /* App Styles */
-.CheckBoxButton {
+.checkbox-button {
     background-color: #434857;
     margin-right: 10px;
     margin-bottom: 2px;
     border-color: #434857;
 }
 
-.CheckBoxButton-checked {
+.checkbox-button-checked {
     color: lightgray;
 }
 
-.CheckBoxButton-unchecked {
+.checkbox-button-unchecked {
     color: transparent;
 }
 
