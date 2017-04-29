@@ -1,6 +1,6 @@
 import React from 'react';
 import * as dataManager from './DataManager';
-import CheckBoxButton from './CheckBoxButton';
+import CheckboxButton from './CheckboxButton';
 import {Panel} from 'react-bootstrap';
 
 /**
@@ -40,7 +40,7 @@ class Recommendations extends React.Component {
             
             return (
                 <div key={entry.id}>
-                    <CheckBoxButton onChange={this._onCheckboxChange.bind(this, entry.exercise.id)} checked={entry.checked} />
+                    <CheckboxButton onChange={this._onCheckboxChange.bind(this, entry.exercise.id)} checked={entry.checked} />
                     {entry.exercise.name}&nbsp;
                     {entry.exercise.bodyParts.map(bodyPart =>
                         <span key={bodyPart.id} className="badge"
