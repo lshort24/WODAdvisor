@@ -1,48 +1,35 @@
 import React from 'react';
 import {Panel, Button} from 'react-bootstrap';
 import * as dataManager from './DataManager';
-import Events from './Events';
 
+/**
+ * @property    {object}    props
+ * @property    {array}     wod
+ * @property    {function}  props.onSaveWorkout
+ */
 class WorkoutOfTheDay extends React.Component {
-    constructor() {
-        super();
-        
-        this.state = {
-            wod: []
-        };
-        
-        this.events = new Events();
-    }
-    
-    componentWillMount() {
-        this.setState({
-            wod: dataManager.getWOD()
-        });
-        
-        this.events.on('wodChange', (wod) => {
-            this.setState({wod: wod});            
-        });
-    }
-    
     render() {
-        let wod = this._getWOD();
+        let wodList = this._getWODList();
         return (
             <Panel header="Workout of the Day">
-                {wod}
+                {wodList}
             </Panel>
         )
     } 
+  
     
-    save() {
-        dataManager.saveWorkout(this.state.wod); 
+    _saveWorkout() {
+        dataManager.saveWorkout(this.props.wod); 
+        this.props.onSaveWorkout();
     }
 
-    _getWOD() {
-        if (this.state.wod.length === 0) {
+    
+    _getWODList() {
+        if (this.props.wod.length === 0) {
             return (<div>Select some exercises from the list below</div>);
         }
 
-        let wod = this.state.wod.map((exercise_id) => {
+        let wod = this.props.wod.map((exercise_id) => {
             let exercise = dataManager.getExerciseById(exercise_id);
             return (
                 <div key={exercise.id}>
@@ -60,7 +47,7 @@ class WorkoutOfTheDay extends React.Component {
             <Button bsStyle="primary" 
                     bsSize="small" 
                     style={{float: 'right'}}
-                    onClick={this.save.bind(this)}>
+                    onClick={this._saveWorkout.bind(this)}>
                 Save Workout
             </Button>
         </div>

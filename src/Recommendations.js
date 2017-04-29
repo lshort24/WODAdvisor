@@ -2,38 +2,18 @@ import React from 'react';
 import * as dataManager from './DataManager';
 import CheckBoxButton from './CheckBoxButton';
 import {Panel} from 'react-bootstrap';
-import Events from './Events';
 
+/**
+ * @property    {object}    props
+ * @property    {array}     wod
+ * @property    {function}  props.onSelection
+ */
 class Recommendations extends React.Component {
-    constructor() {
-        super();
-
-        this.state = {
-            recommendations: this._getRecommendations()
-        };
-
-        this.events = new Events();
+    _onCheckboxChange(exerciseId, checked) {
+        this.props.onSelection(exerciseId, checked);
     }
 
-    componentWillMount() {
-        this.events.on('wodChange', () => {
-            this.setState({
-                recommendations: this._getRecommendations()
-            });
-        });
-    }
-
-    //noinspection JSMethodCanBeStatic
-    onCheckboxChange(exerciseId, checked) {
-        if (checked) {
-            dataManager.addToWOD(exerciseId);
-        }
-        else {
-            dataManager.removeFromWOD(exerciseId);
-        }
-    }
-
-
+    
     render() {
         let recommendationList = this._buildRecommendationList();
 
@@ -44,29 +24,38 @@ class Recommendations extends React.Component {
         )
     }
 
+    
     _buildRecommendationList() {
         console.log('build recommendations');
-        return this.state.recommendations.map((entry) => {
+        let recommendations = this._getRecommendations();
+        return recommendations.map((entry) => {
+            let show_debug_info = false;
+            let debug_info = '';
+            if (show_debug_info) {
+                debug_info = <span>
+                    &nbsp;<span>score = {entry.score}</span>
+                    &nbsp;<span>ago = {entry.daysAgo}</span>
+                </span>;                
+            }
+            
             return (
                 <div key={entry.id}>
-                    <CheckBoxButton onChange={this.onCheckboxChange.bind(this, entry.exercise.id)} checked={entry.checked} />
+                    <CheckBoxButton onChange={this._onCheckboxChange.bind(this, entry.exercise.id)} checked={entry.checked} />
                     {entry.exercise.name}&nbsp;
                     {entry.exercise.bodyParts.map(bodyPart =>
                         <span key={bodyPart.id} className="badge"
                               style={{backgroundColor: bodyPart.color}}>{bodyPart.name}&nbsp;</span>
                     )}
-                    &nbsp;<span>score = {entry.score}</span>
-                    &nbsp;<span>ago = {entry.daysAgo}</span>
-                    
+                    {debug_info}
                 </div>
             )
         });
     }
 
+    
     _getRecommendations() {
         // Start off with a list of all exercises and the date they were last performed
         let recommendations = dataManager.getExerciseHistory();
-        let wod = dataManager.getWOD();
         
         // Determine the priority for body parts
         let priority = [];
@@ -109,7 +98,7 @@ class Recommendations extends React.Component {
         
         // Set checked state
         recommendations = recommendations.map(entry => {
-            entry.checked = wod.indexOf(entry.exercise.id) >= 0; 
+            entry.checked = this.props.wod.indexOf(entry.exercise.id) >= 0; 
             return entry;
         });
 

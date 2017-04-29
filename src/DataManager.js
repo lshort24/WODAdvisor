@@ -1,5 +1,4 @@
 import * as data from './Data';
-import Events from './Events';
 import Moment from "moment";
 
 export let getBodyPartById = function (id) {
@@ -115,7 +114,7 @@ export let getExerciseHistory = function () {
 };
 
 
-let saveWOD = function(wod) {
+export let saveWOD = function(wod) {
     if (wod) {
         let wodString = JSON.stringify(wod);
         localStorage.setItem('wod', wodString);
@@ -123,7 +122,6 @@ let saveWOD = function(wod) {
     else {
         localStorage.removeItem('wod');
     }
-    Events.trigger('wodChange', wod);
 };
 
 
@@ -144,9 +142,6 @@ export let saveWorkout = function (wod) {
     
     let historyJSON = JSON.stringify(history);
     localStorage.setItem('history', historyJSON);
-    
-    // clear the workout of the day
-    saveWOD([]);
 };
 
 export let getWOD = function() {
