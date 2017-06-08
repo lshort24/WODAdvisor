@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import { createStore } from 'redux';
+import stateManager from './stateManager';
 import WorkoutOfTheDay from './WorkoutOfTheDay';
 import Recommendations from './Recommendations';
 import * as dataManager from './DataManager';
@@ -9,32 +11,27 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
-            wod: dataManager.getWOD()
-        };
-    }
-    
-    
-    _updateWOD(exerciseId, checked) {
-        if (checked) {
-            dataManager.addToWOD(exerciseId);
-        }
-        else {
-            dataManager.removeFromWOD(exerciseId);
-        } 
-        this.setState({
-            wod: dataManager.getWOD()
-        });
-    }
-    
-    
-    _clearWOD() {
-        // Clear the workout for next time
-        dataManager.saveWOD([]);
-        this.setState({
             wod: []
-        });
+        };
+        this.store = createStore(stateManager);
     }
     
+    componentWillMount() {
+        this.store.subscribe(() => {
+            let new_state = this.store.getState();
+            
+            // Save the WOD to local storage
+            dataManager.saveWOD(new_state.wod);
+            
+            // Save the workout
+            if (new_state.save) {
+                dataManager.saveWorkout(new_state.save_wod);
+            }
+            this.setState({wod: new_state.wod});
+        });
+
+        this.store.dispatch({type: 'INIT'});
+    }
     
     render() {
         return (
@@ -43,10 +40,27 @@ class App extends Component {
                     <Col sm={12}><PageHeader>WOD Advisor</PageHeader></Col>
                 </Row>
                 <Row className="show-grid">
-                    <Col sm={12}><WorkoutOfTheDay wod={this.state.wod} onSaveWorkout={this._clearWOD.bind(this)}/></Col>
+                    <Col sm={12}>
+                        <WorkoutOfTheDay 
+                            value={this.state.wod}
+                            onSaveWorkout={() => {
+                                this.store.dispatch({type: 'SAVE_WORKOUT'});
+                            }}
+                            onRemove={(index) => {
+                                this.store.dispatch({type: 'REMOVE_FROM_WOD', value: index});
+                            }}
+                        />
+                    </Col>
                 </Row>
                 <Row className="show-grid">
-                    <Col sm={12}><Recommendations wod={this.state.wod} onSelection={this._updateWOD.bind(this)}/></Col>
+                    <Col sm={12}>
+                        <Recommendations 
+                            value={this.state.wod}
+                            onAdd={(index) => {
+                                this.store.dispatch({type: 'ADD_TO_WOD', value: index});
+                            }} 
+                        />
+                    </Col>
                 </Row>
             </Grid>
         );

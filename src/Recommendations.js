@@ -4,18 +4,14 @@ import CheckboxButton from './CheckboxButton';
 import {Panel} from 'react-bootstrap';
 
 /**
- * @property    {object}    props
- * @property    {array}     wod
- * @property    {function}  props.onSelection
+ * Component that displays a list of recommended exercises bases on past history of workouts
+ *  
+ * @param   {array}     props.value
+ * @param   {function}  props.onAdd
  */
 class Recommendations extends React.Component {
-    _onCheckboxChange(exerciseId, checked) {
-        this.props.onSelection(exerciseId, checked);
-    }
-
-    
     render() {
-        let recommendationList = this._buildRecommendationList();
+        let recommendationList = this._buildRecommendationList(this.props.value);
 
         return (
             <Panel header="Recommendations">
@@ -24,10 +20,16 @@ class Recommendations extends React.Component {
         )
     }
 
+    _onChange(index) {
+        this.props.onAdd(index);        
+    }
     
-    _buildRecommendationList() {
+    
+    _buildRecommendationList(wod) {
+        let component = this;
+        
         console.log('build recommendations');
-        let recommendations = this._getRecommendations();
+        let recommendations = this._getRecommendations(wod);
         return recommendations.map((entry) => {
             let show_debug_info = false;
             let debug_info = '';
@@ -40,7 +42,7 @@ class Recommendations extends React.Component {
             
             return (
                 <div key={entry.id}>
-                    <CheckboxButton onChange={this._onCheckboxChange.bind(this, entry.exercise.id)} checked={entry.checked} />
+                    <CheckboxButton onChange={component._onChange.bind(component, entry.exercise.id)} checked={entry.checked} />
                     {entry.exercise.name}&nbsp;
                     {entry.exercise.bodyParts.map(bodyPart =>
                         <span key={bodyPart.id} className="badge"
@@ -53,7 +55,7 @@ class Recommendations extends React.Component {
     }
 
     
-    _getRecommendations() {
+    _getRecommendations(wod) {
         // Start off with a list of all exercises and the date they were last performed
         let recommendations = dataManager.getExerciseHistory();
         
@@ -98,7 +100,7 @@ class Recommendations extends React.Component {
         
         // Set checked state
         recommendations = recommendations.map(entry => {
-            entry.checked = this.props.wod.indexOf(entry.exercise.id) >= 0; 
+            entry.checked = wod.indexOf(entry.exercise.id) >= 0; 
             return entry;
         });
 

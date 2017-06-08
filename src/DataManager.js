@@ -154,22 +154,4 @@ export let getWOD = function() {
 };    
 
 
-export let addToWOD = function (exerciseId) {
-    let wod = getWOD();
-    if (wod.indexOf(exerciseId) < 0) {
-        wod.push(exerciseId);
-        saveWOD(wod);
-    }
-};
-
-export let removeFromWOD = function (exerciseId) {
-    let wod = getWOD();
-    if (wod) {
-        let index = wod.indexOf(exerciseId);
-        if (index >= 0) {
-            wod.splice(index, 1);
-            saveWOD(wod);
-        }        
-    }
-};
 
