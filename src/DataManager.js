@@ -63,6 +63,10 @@ export let getHistory = function () {
 };
 
 export let getExerciseHistory = function () {
+    let now = new Moment();
+    let base_date_string = '2017-06-08';   // Date to use for new exercises so they will appear at the top of the list.
+    let base_date = new Moment(base_date_string);
+    
     // Sort history by date - from newest to oldest
     let sorted_history = getHistory().sort((a, b) => {
         let aDate = new Moment(a[1]);
@@ -83,14 +87,12 @@ export let getExerciseHistory = function () {
     
     // Now expand the info to an object. Set the id to the id of the exercise
     exercises = exercises.map(historyRecord => {
-        let now = new Moment();
         let date = new Moment(historyRecord[1]);
-        
         return {
             id: historyRecord[2],
             date: historyRecord[1],
             exercise: getExerciseById(historyRecord[2]),
-            daysAgo: now.diff(date, 'days')
+            timeAgo: now.diff(date, 'seconds')
         }
     });
 
@@ -100,12 +102,12 @@ export let getExerciseHistory = function () {
             return history.exercise.id === exercise.id;
         });
         if (!match) {
-            let now = new Moment();
+            
             exercises.push({
                 id: exercise.id,
-                date: now.format(),
+                date: base_date_string,
                 exercise: exercise,
-                daysAgo: 0
+                timeAgo: now.diff(base_date, 'seconds')
             });
         }
     });
@@ -132,7 +134,10 @@ export let saveWorkout = function (wod) {
     
     let lastHistoryId = 0;
     if (history && history.length > 0) {
-        lastHistoryId = history[history.length-1].id;
+        lastHistoryId = history[history.length-1][0];
+        if (!Number.isInteger(lastHistoryId)) {
+            throw new Error(`ID '${lastHistoryId}' is not a valid id.`);
+        }
     }
     
     wod.forEach(exercise_id => {

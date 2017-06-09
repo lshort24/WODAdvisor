@@ -45,3 +45,9 @@ body {
 .badge {
     font-weight: normal;
 }
+
+.plus-button,
+.minus-button {
+    margin-right: 10px;
+    margin-bottom: 2px;
+}

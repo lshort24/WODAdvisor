@@ -1,7 +1,6 @@
 import React from 'react';
 import * as dataManager from './DataManager';
-import CheckboxButton from './CheckboxButton';
-import {Panel} from 'react-bootstrap';
+import {Button, Panel} from 'react-bootstrap';
 
 /**
  * Component that displays a list of recommended exercises bases on past history of workouts
@@ -19,30 +18,30 @@ class Recommendations extends React.Component {
             </Panel>
         )
     }
-
-    _onChange(index) {
-        this.props.onAdd(index);        
-    }
     
     
     _buildRecommendationList(wod) {
-        let component = this;
-        
         console.log('build recommendations');
         let recommendations = this._getRecommendations(wod);
         return recommendations.map((entry) => {
+            if (entry.in_wod) {
+                return false;
+            }
+            
             let show_debug_info = false;
             let debug_info = '';
             if (show_debug_info) {
                 debug_info = <span>
-                    &nbsp;<span>score = {entry.score}</span>
-                    &nbsp;<span>ago = {entry.daysAgo}</span>
+                    &nbsp;<span>score = {entry.bodyPartScore}</span>
+                    &nbsp;<span>ago = {entry.timeAgo}</span>
                 </span>;                
             }
             
             return (
                 <div key={entry.id}>
-                    <CheckboxButton onChange={component._onChange.bind(component, entry.exercise.id)} checked={entry.checked} />
+                    <Button bsStyle="success" className="plus-button" onClick={this.props.onAdd.bind(this, entry.exercise.id)}>
+                        <span className="glyphicon glyphicon-plus" />
+                    </Button>
                     {entry.exercise.name}&nbsp;
                     {entry.exercise.bodyParts.map(bodyPart =>
                         <span key={bodyPart.id} className="badge"
@@ -63,8 +62,8 @@ class Recommendations extends React.Component {
         let priority = [];
         recommendations.forEach((entry) => {
             entry.exercise.bodyParts.forEach((bodyPart) => {
-                if (!priority[bodyPart.id] || entry.daysAgo + 1 < priority[bodyPart.id]) {
-                    priority[bodyPart.id] = entry.daysAgo + 1;
+                if (!priority[bodyPart.id] || entry.timeAgo < priority[bodyPart.id]) {
+                    priority[bodyPart.id] = entry.timeAgo;
                 }
             })
         });
@@ -89,18 +88,27 @@ class Recommendations extends React.Component {
                 }
             });
 
-            entry.score = maxBodyPartScore * (entry.daysAgo + 1);
+            entry.bodyPartScore = maxBodyPartScore;
             return entry;
         });
     
-        // Sort
+        // Sort first by body part score then by timeAgo in descending order
+        // a == b => 0
+        // a < b  => positive value - a should come after b
+        // a > b  => negative value - a should come before b
         recommendations = recommendations.sort((a, b) => {
-            return b.score - a.score;
+            if (a.bodyPartScore === b.bodyPartScore) {
+                // sort by timeAgo
+                return b.timeAgo - a.timeAgo;
+            }
+            
+            // sort by body part score
+            return b.bodyPartScore - a.bodyPartScore;
         });
         
-        // Set checked state
+        // Set in_wod state
         recommendations = recommendations.map(entry => {
-            entry.checked = wod.indexOf(entry.exercise.id) >= 0; 
+            entry.in_wod = wod.indexOf(entry.exercise.id) >= 0; 
             return entry;
         });
 

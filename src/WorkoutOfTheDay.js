@@ -7,6 +7,7 @@ import * as dataManager from './DataManager';
  * 
  * @param   {array}     props.value
  * @param   {function}  props.onSaveWorkout
+ * @param   {function}  props.onRemove
  */
 class WorkoutOfTheDay extends React.Component {
     render() {
@@ -18,7 +19,7 @@ class WorkoutOfTheDay extends React.Component {
         )
     }
 
-    
+   
     _getWODList() {
         if (this.props.value.length === 0) {
             return (<div>Select some exercises from the list below</div>);
@@ -28,6 +29,9 @@ class WorkoutOfTheDay extends React.Component {
             let exercise = dataManager.getExerciseById(exercise_id);
             return (
                 <div key={exercise.id}>
+                    <Button bsStyle="danger" className="minus-button" onClick={this.props.onRemove.bind(this, exercise_id)}>
+                        <span className="glyphicon glyphicon-minus" />
+                    </Button>
                     <span>{exercise.name}</span>&nbsp;
                     {exercise.bodyParts.map(bodyPart =>
                         <span key={bodyPart.id} className="badge"
