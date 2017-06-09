@@ -13,7 +13,7 @@ class Recommendations extends React.Component {
         let recommendationList = this._buildRecommendationList(this.props.value);
 
         return (
-            <Panel header="Recommendations">
+            <Panel header="Recommendationss">
                 {recommendationList}
             </Panel>
         )
