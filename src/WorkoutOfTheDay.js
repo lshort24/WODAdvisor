@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {Component} from 'react';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 import {Panel, Button} from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import * as dataManager from './DataManager';
+import {selectMinus, saveWorkout} from './actions';
 
 /**
  * Component for the workout of the day
  */
-class WorkoutOfTheDay extends React.Component {
+class WorkoutOfTheDay extends Component {
 
     render() {
         let content = <div>Select some exercises from the list below</div>;
@@ -14,14 +16,13 @@ class WorkoutOfTheDay extends React.Component {
             content = <div>
                 {
                     this.props.wod.map((exercise_id) => {
-                        const exercise = dataManager.getExerciseById(exercise_id);
                         return (
-                            <div key={exercise.id}>
-                                <Button bsStyle="danger" className="minus-button" onClick={this.props.onRemove.bind(this, exercise_id)}>
+                            <div key={exercise_id}>
+                                <Button bsStyle="danger" className="minus-button" onClick={() => this.props.selectMinus(this.props.exercises[exercise_id])}>
                                     <span className="glyphicon glyphicon-minus" />
                                 </Button>
-                                <span>{exercise.name}</span>&nbsp;
-                                {exercise.bodyParts.map(bodyPart =>
+                                <span>{this.props.exercises[exercise_id].name}</span>&nbsp;
+                                {this.props.exercises[exercise_id].bodyParts.map(bodyPart =>
                                     <span key={bodyPart.id} className="badge"
                                           style={{backgroundColor: bodyPart.color}}>{bodyPart.name}</span>
                                 )}
@@ -32,7 +33,7 @@ class WorkoutOfTheDay extends React.Component {
                 <Button bsStyle="primary"
                         bsSize="small"
                         style={{float: 'right'}}
-                        onClick={this.props.onSaveWorkout.bind(this, this.props.wod)}>
+                        onClick={() => this.props.saveWorkout(this.props.wod)}>
                     Save Workout
                 </Button>
             </div>
@@ -46,14 +47,32 @@ class WorkoutOfTheDay extends React.Component {
     }
 }
 
+
 WorkoutOfTheDay.propTypes = {
-    wod: PropTypes.array.isRequired,
-    onRemove: PropTypes.func.isRequired,
-    onSaveWorkout: PropTypes.func.isRequired
+    wod: PropTypes.array,
+    exercises: PropTypes.array,
+    selectMinus: PropTypes.func,
+    saveWorkout: PropTypes.func
 };
 
 WorkoutOfTheDay.defaultTypes = {
-    wod: []
+    wod: [],
+    exercises: []
 };
 
-export default WorkoutOfTheDay;
+
+function mapStateToProps(state) {
+   return {
+       wod: state.wod,
+       exercises: state.exercises
+   } 
+}
+
+function matchDispatchToProps(dispatch) {
+    return bindActionCreators({
+        selectMinus: selectMinus,
+        saveWorkout: saveWorkout
+    }, dispatch);
+}
+
+export default connect(mapStateToProps, matchDispatchToProps)(WorkoutOfTheDay);

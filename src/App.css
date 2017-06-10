@@ -27,21 +27,6 @@ body {
 }
 
 /* App Styles */
-.checkbox-button {
-    background-color: #434857;
-    margin-right: 10px;
-    margin-bottom: 2px;
-    border-color: #434857;
-}
-
-.checkbox-button-checked {
-    color: lightgray;
-}
-
-.checkbox-button-unchecked {
-    color: transparent;
-}
-
 .badge {
     font-weight: normal;
 }
@@ -50,8 +35,4 @@ body {
 .minus-button {
     margin-right: 10px;
     margin-bottom: 2px;
-}
-
-.logo {
-    
 }
