@@ -5,21 +5,18 @@
   "dependencies": {
     "deep-freeze": "0.0.1",
     "expect": "^1.20.2",
-    "react": "15.4.2",
-    "react-dom": "15.4.2",
-    "redux": "^3.6.0"
-  },
-  "devDependencies": {
     "moment": "^2.17.1",
     "moment-timezone": "^0.5.11",
-    "random-guid": "^0.1.4",
-    "react": "^15.4.2",
+    "prop-types": "^15.5.10",
+    "react": "15.4.2",
     "react-bootstrap": "^0.30.8",
-    "react-dom": "^15.4.2",
-    "react-icons": "^2.2.3",
+    "react-dom": "15.4.2",
     "react-moment": "^0.2.2",
-    "react-scripts": "^0.9.3"
+    "react-redux": "^5.0.5",
+    "react-scripts": "^0.9.3",
+    "redux": "^3.6.0"
   },
+  "devDependencies": {},
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

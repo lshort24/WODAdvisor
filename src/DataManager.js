@@ -1,6 +1,6 @@
 import Moment from "moment";
 
-let exercises = [
+const exercises = [
     [1, 'Shoulder Press'],
     [2, 'Back Raises'],
     [3, 'Wall Balls'],
@@ -17,7 +17,7 @@ let exercises = [
     [14, 'Hamstring Pulls']
 ];
 
-let bodyParts = [
+const bodyParts = [
     [1, 'shoulders',  '#f45628'], /* orange */
     [2, 'lower-back', '#3c38e8'], /* royal blue */
     [3, 'quads',      '#b2515b'], /* rose */
@@ -31,7 +31,7 @@ let bodyParts = [
     [11, 'hamstrings','#483D8B']  /* purple */
 ];
 
-let exerciseBodyPart = [
+const exerciseBodyPart = [
     [1, 1],
     [2, 2],
     [3, 1],
@@ -52,7 +52,8 @@ let exerciseBodyPart = [
     [14, 11]
 ];
 
-let history = [
+/*
+const history = [
     [1, '2017-02-04', 1],
     [2, '2017-02-04', 2],
     [3, '2017-02-04', 3],
@@ -75,9 +76,10 @@ let history = [
     [20, '2017-03-18', 14],
     [21, '2017-03-18', 9]
 ];
+*/
 
-export let getBodyPartById = function (id) {
-    let bodyPartRecord = bodyParts.find((record) => {
+export const getBodyPartById = function (id) {
+    const bodyPartRecord = bodyParts.find((record) => {
         return record[0] === id;
     });
 
@@ -92,7 +94,7 @@ export let getBodyPartById = function (id) {
     }
 };
 
-export let getBodyParts = function (exerciseId) {
+export const getBodyParts = function (exerciseId) {
     return exerciseBodyPart.filter((exerciseBodyPart) => {
         return exerciseBodyPart[0] === exerciseId;
     }).map((exerciseBodyPart) => {
@@ -101,8 +103,8 @@ export let getBodyParts = function (exerciseId) {
 };
 
 
-export let getExerciseById = function (id) {
-    let exerciseRecord = exercises.find((record) => {
+export const getExerciseById = function (id) {
+    const exerciseRecord = exercises.find((record) => {
         return record[0] === id;
     });
 
@@ -118,18 +120,18 @@ export let getExerciseById = function (id) {
 };
 
 
-export let getExercises = function () {
+export const getExercises = function () {
     return exercises.map((exerciseRecord) => {
         return getExerciseById(exerciseRecord[0]);
     });
 };
 
 
-export let getHistory = function () {
+export const getHistory = function () {
     //return history;
 
     //localStorage.removeItem('history');
-    let historyJSON = localStorage.getItem('history');
+    const historyJSON = localStorage.getItem('history');
     if (historyJSON) {
         return JSON.parse(historyJSON);
     }
@@ -137,22 +139,22 @@ export let getHistory = function () {
     return [];
 };
 
-export let getExerciseHistory = function () {
-    let now = new Moment();
-    let base_date_string = '2017-06-08';   // Date to use for new exercises so they will appear at the top of the list.
-    let base_date = new Moment(base_date_string);
+export const getExerciseHistory = function () {
+    const now = new Moment();
+    const base_date_string = '2017-06-08';   // Date to use for new exercises so they will appear at the top of the list.
+    const base_date = new Moment(base_date_string);
     
     // Sort history by date - from newest to oldest
-    let sorted_history = getHistory().sort((a, b) => {
-        let aDate = new Moment(a[1]);
-        let bDate = new Moment(b[1]);
+    const sorted_history = getHistory().sort((a, b) => {
+        const aDate = new Moment(a[1]);
+        const bDate = new Moment(b[1]);
         return bDate.diff(aDate);
     });
 
     // Build a list of exercises based on the latest history entry for each exercise
     let haveLastEntryForExercise = [];
     let exercises = sorted_history.filter(historyRecord => {
-        let exerciseId = historyRecord[2];
+        const exerciseId = historyRecord[2];
         if (!haveLastEntryForExercise[exerciseId]) {
             haveLastEntryForExercise[exerciseId] = true;
             return true;
@@ -162,7 +164,7 @@ export let getExerciseHistory = function () {
     
     // Now expand the info to an object. Set the id to the id of the exercise
     exercises = exercises.map(historyRecord => {
-        let date = new Moment(historyRecord[1]);
+        const date = new Moment(historyRecord[1]);
         return {
             id: historyRecord[2],
             date: historyRecord[1],
@@ -173,7 +175,7 @@ export let getExerciseHistory = function () {
 
     // Add any exercises that are missing with a date of today
     getExercises().forEach((exercise) => {
-        let match = exercises.find((history) => {
+        const match = exercises.find((history) => {
             return history.exercise.id === exercise.id;
         });
         if (!match) {
@@ -191,9 +193,9 @@ export let getExerciseHistory = function () {
 };
 
 
-export let saveWOD = function(wod) {
+export const saveWOD = function(wod) {
     if (wod) {
-        let wodString = JSON.stringify(wod);
+        const wodString = JSON.stringify(wod);
         localStorage.setItem('wod', wodString);
     }
     else {
@@ -203,9 +205,9 @@ export let saveWOD = function(wod) {
 
 
 
-export let saveWorkout = function (wod) {
-    let history = getHistory();
-    let now = new Moment();
+export const saveWorkout = function (wod) {
+    const history = getHistory();
+    const now = new Moment();
     
     let lastHistoryId = 0;
     if (history && history.length > 0) {
@@ -220,18 +222,74 @@ export let saveWorkout = function (wod) {
         history.push([lastHistoryId, now.format(), exercise_id]);   
     });
     
-    let historyJSON = JSON.stringify(history);
+    const historyJSON = JSON.stringify(history);
     localStorage.setItem('history', historyJSON);
 };
 
-export let getWOD = function() {
-    let wodJSON = localStorage.getItem('wod');
+export const getWOD = function() {
+    const wodJSON = localStorage.getItem('wod');
     if (wodJSON) {
         return JSON.parse(wodJSON);
     }
 
     return [];
-};    
+};  
+
+
+export const getRecommendations = function() {
+    // Start off with a list of all exercises and the date they were last performed.
+    let recommendations = getExerciseHistory();
+
+    // Determine the priority for body parts
+    let priority = [];
+    recommendations.forEach((entry) => {
+        entry.exercise.bodyParts.forEach((bodyPart) => {
+            if (!priority[bodyPart.id] || entry.timeAgo < priority[bodyPart.id]) {
+                priority[bodyPart.id] = entry.timeAgo;
+            }
+        })
+    });
+
+    // Assign a priority to each of the recommendations
+    recommendations = recommendations.map((entry) => {
+        entry.bodyParts = entry.exercise.bodyParts.map((bodyPart) => {
+            return bodyPart.priority = priority[bodyPart.id];
+        });
+        return entry;
+    });
+
+    // Score
+    recommendations = recommendations.map((entry) => {
+        let maxBodyPartScore = 0;
+        entry.exercise.bodyParts.forEach((bodyPart) => {
+            if (bodyPart.priority > maxBodyPartScore) {
+                if (maxBodyPartScore !== 0) {
+                    console.log(`Overriding body part score of ${maxBodyPartScore} because ${bodyPart.name} has a priority of ${bodyPart.priority}.`);
+                }
+                maxBodyPartScore = bodyPart.priority;
+            }
+        });
+
+        entry.bodyPartScore = maxBodyPartScore;
+        return entry;
+    });
+
+    // Sort first by body part score then by timeAgo in descending order
+    // a == b => 0
+    // a < b  => positive value - a should come after b
+    // a > b  => negative value - a should come before b
+    recommendations = recommendations.sort((a, b) => {
+        if (a.bodyPartScore === b.bodyPartScore) {
+            // sort by timeAgo
+            return b.timeAgo - a.timeAgo;
+        }
+
+        // sort by body part score
+        return b.bodyPartScore - a.bodyPartScore;
+    });
+
+    return recommendations;    
+};
 
 
 
