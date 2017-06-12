@@ -1,13 +1,14 @@
 import * as dataManager from './DataManager';
+import {SELECT_PLUS, SELECT_MINUS, SAVE_WORKOUT} from './wod';
 
-const choicesReducer = (state, action) => {
+export default function choicesReducer (state, action) {
     if (typeof state === 'undefined') {
         const choices = dataManager.loadChoices();
         return dataManager.sortRecommendations(choices);
     }
 
     switch (action.type) {
-        case 'SELECT_PLUS':
+        case SELECT_PLUS:
             const pos = state.indexOf(action.payload.id);
             if (pos >= 0) {
                 return [
@@ -17,11 +18,11 @@ const choicesReducer = (state, action) => {
             }
             break;
         
-        case 'SELECT_MINUS':
+        case SELECT_MINUS:
             const choices = [...state, action.payload.id];
             return dataManager.sortRecommendations(choices);
 
-        case 'SAVE_WORKOUT':
+        case SAVE_WORKOUT:
             return dataManager.sortRecommendations();
         
         default:
@@ -29,6 +30,4 @@ const choicesReducer = (state, action) => {
     }
     
     return state;
-};
-
-export default choicesReducer;
+}

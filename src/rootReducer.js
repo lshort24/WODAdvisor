@@ -2,13 +2,13 @@
  * Redux Reducer
  */
 import {combineReducers} from 'redux';
-import wodReducer from './wodReducer';
+import reducer from './wod';
 import choicesReducer from './choicesReducer';
 import exerciseReducer from './exerciseReducer';
 import scoresReducer from './scoresReducer';
 
 const rootReducer = combineReducers({
-    wod: wodReducer,
+    wod: reducer,
     choices: choicesReducer,
     exercises: exerciseReducer,
     scores: scoresReducer

@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {Button, Panel} from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import {selectPlus} from './actions';
+import {selectPlus} from './wod';
 
 /**
  * Component that displays a list of recommended exercises bases on past history of workouts

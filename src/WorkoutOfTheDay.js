@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {Panel, Button} from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import {selectMinus, saveWorkout} from './actions';
+import {selectMinus, saveWorkout} from './wod';
 
 /**
  * Component for the workout of the day
