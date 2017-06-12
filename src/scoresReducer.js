@@ -2,7 +2,7 @@ import * as dataManager from './DataManager';
 
 const scoresReducer = (state, action) => {
     let scores = {};
-    const debug = true;
+    const debug = false;
     
     if (!debug) {
         return scores;

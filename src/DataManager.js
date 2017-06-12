@@ -204,9 +204,7 @@ export function scoreRecommendations(ids) {
     });
 
     // Convert the exercise list from an object to an array of choices
-   console.log('Last exercise time ago');
     let recommendations = Object.keys(exercise_last_workout).map(exercise_id => {
-        console.log(exercise_last_workout[exercise_id].name, exercise_last_workout[exercise_id].date, exercise_last_workout[exercise_id].timeAgo);
         return exercise_last_workout[exercise_id];    
     });
     
@@ -214,7 +212,7 @@ export function scoreRecommendations(ids) {
     let bodyPartScores = [];
     recommendations.forEach((recommendation) => {
         recommendation.bodyParts.forEach((bodyPart) => {
-            if (!bodyPartScores[bodyPart.id] || recommendation.timeAgo < bodyPartScores[bodyPart.id]) {
+            if (typeof bodyPartScores[bodyPart.id] === 'undefined' || recommendation.timeAgo < bodyPartScores[bodyPart.id]) {
                 bodyPartScores[bodyPart.id] = recommendation.timeAgo;
             }
         })
@@ -224,11 +222,10 @@ export function scoreRecommendations(ids) {
     recommendations = recommendations.map(recommendation => {
         let maxBodyPartScore = 0;
         recommendation.bodyParts.forEach((bodyPart) => {
-            console.log('Body part score for ' + recommendation.name + ': ' + bodyPart.name + '=' + bodyPartScores[bodyPart.id]);
             if (bodyPartScores[bodyPart.id] > maxBodyPartScore) {
-                if (maxBodyPartScore !== 0) {
-                    console.log(`Overriding body part score of ${maxBodyPartScore} because ${bodyPart.name} has a priority of ${bodyPartScores[bodyPart.id]}.`);
-                }
+                //if (maxBodyPartScore !== 0) {
+                //    console.log(`Overriding body part score of ${maxBodyPartScore} because ${bodyPart.name} has a priority of ${bodyPartScores[bodyPart.id]}.`);
+                //}
                 maxBodyPartScore = bodyPartScores[bodyPart.id];
             }
         });
