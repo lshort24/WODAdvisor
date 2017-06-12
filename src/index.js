@@ -5,6 +5,20 @@ import rootReducer from './rootReducer';
 import {Provider} from 'react-redux';
 import App from './App';
 
+// Register Service Worker
+/*
+if ('serviceWorker' in navigator) {
+   navigator.serviceWorker.register('/wodadvisor/serviceWorker.js')
+      .then(function(reg) {
+         // registration worked
+         console.log('Registration succeeded. Scope is ' + reg.scope);
+      }).catch(function(error) {
+      // registration failed
+      console.log('Registration failed with ' + error);
+   });
+}
+*/
+
 const store = createStore(rootReducer);
 
 ReactDOM.render(

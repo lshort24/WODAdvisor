@@ -3,7 +3,9 @@ body {
     background-color: #252830;
     color: white;
 }
-
+h1 {
+    margin: 0;
+}
 .page-header {
     border: none;
 }
@@ -34,5 +36,11 @@ body {
 .plus-button,
 .minus-button {
     margin-right: 10px;
-    margin-bottom: 2px;
+    margin-bottom: 7px;
+}
+
+.logo {
+    height: 65px;
+    float: left;
+    margin-top: -12px;
 }
