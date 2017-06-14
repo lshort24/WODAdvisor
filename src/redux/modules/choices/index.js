@@ -1,7 +1,7 @@
-import * as dataManager from './DataManager';
-import {SELECT_PLUS, SELECT_MINUS, SAVE_WORKOUT} from './wod';
+import * as dataManager from '../../../services/DataManager';
+import {SELECT_PLUS, SELECT_MINUS, SAVE_WORKOUT} from '../wod/index';
 
-export default function choicesReducer (state, action) {
+export default function reducer (state, action) {
     if (typeof state === 'undefined') {
         const choices = dataManager.loadChoices();
         return dataManager.sortRecommendations(choices);
@@ -17,17 +17,17 @@ export default function choicesReducer (state, action) {
                 ]
             }
             break;
-        
+
         case SELECT_MINUS:
             const choices = [...state, action.payload.id];
             return dataManager.sortRecommendations(choices);
 
         case SAVE_WORKOUT:
             return dataManager.sortRecommendations();
-        
+
         default:
             break;
     }
-    
+
     return state;
 }

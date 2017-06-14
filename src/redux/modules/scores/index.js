@@ -1,14 +1,14 @@
-import * as dataManager from './DataManager';
-import {SAVE_WORKOUT} from './wod';
+import * as dataManager from '../../../services/DataManager';
+import {SAVE_WORKOUT} from '../wod/index';
 
-const scoresReducer = (state, action) => {
+export default function reducer(state, action) {
     let scores = {};
     const debug = false;
-    
+
     if (!debug) {
         return scores;
     }
-    
+
     if (typeof state === 'undefined' || action.type === SAVE_WORKOUT) {
         dataManager.scoreRecommendations().forEach(recommendation => {
             scores[recommendation.id] = {
@@ -18,10 +18,8 @@ const scoresReducer = (state, action) => {
             }
         });
 
-        return scores;       
+        return scores;
     }
 
     return state;
-};
-
-export default scoresReducer;
+}

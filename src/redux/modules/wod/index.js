@@ -1,4 +1,4 @@
-import * as dataManager from './DataManager';
+import * as dataManager from '../../../services/DataManager';
 
 // Actions
 export const SELECT_PLUS = 'wodadvisor/wod/SELECT_PLUS';
@@ -18,7 +18,7 @@ export default function reducer(state, action) {
             new_state = [...state, action.payload.id];
             dataManager.saveWOD(new_state);
             return new_state;
-        
+
         case SELECT_MINUS:
             const pos = state.indexOf(action.payload.id);
             if (pos >= 0) {
@@ -41,7 +41,7 @@ export default function reducer(state, action) {
     }
 
     return state;
-};
+}
 
 // Action Creators
 export function selectPlus (exercise) {
@@ -65,3 +65,4 @@ export function saveWorkout(wod) {
     };
 }
     
+
