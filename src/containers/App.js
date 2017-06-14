@@ -13,7 +13,7 @@ export class App extends Component {
         return (
             <Grid>
                 <Row className="show-grid">
-                    <Col sm={12}><PageHeader><img className="logo" src="logo.png" alt="logo"/>WOD Advisor</PageHeader></Col>
+                    <Col sm={12}><PageHeader><img className="logo" src="logo.png" alt="logo"/>WOD Advisor!</PageHeader></Col>
                 </Row>
                 <Row className="show-grid">
                     <Col sm={12}>
