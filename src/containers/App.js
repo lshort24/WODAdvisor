@@ -2,18 +2,18 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {selectPlus, selectMinus, saveWorkout} from '../redux/modules/wod/index';
-import WorkoutOfTheDay from '../components/WorkoutOfTheDay/index';
-import Recommendations from '../components/Recommendations/index';
+import WorkoutOfTheDay from '../components/workout_of_the_day/index';
+import Recommendations from '../components/recommendations/index';
 import {Col, Grid, PageHeader, Row } from 'react-bootstrap';
-import "../App.css";
+import "../app.css";
 
-export class App extends Component {
+class App extends Component {
     //noinspection JSMethodCanBeStatic
     render() {
         return (
             <Grid>
                 <Row className="show-grid">
-                    <Col sm={12}><PageHeader><img className="logo" src="logo.png" alt="logo"/>WOD Advisor!</PageHeader></Col>
+                    <Col sm={12}><PageHeader><img className="logo" src="logo.png" alt="logo"/>WOD Advisor</PageHeader></Col>
                 </Row>
                 <Row className="show-grid">
                     <Col sm={12}>
