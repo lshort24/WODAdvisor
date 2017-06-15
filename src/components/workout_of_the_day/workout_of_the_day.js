@@ -5,7 +5,7 @@ import {Panel, Button} from 'react-bootstrap';
 /**
  * Dumb component for the workout of the day
  */
-export const WorkoutOfTheDay = (props) => {
+const WorkoutOfTheDay = (props) => {
 
     if (props.wod.length === 0) {
         return <Panel header="Workout of the Day">
@@ -54,3 +54,5 @@ WorkoutOfTheDay.defaultTypes = {
     wod: [],
     exercises: []
 };
+
+export default WorkoutOfTheDay;

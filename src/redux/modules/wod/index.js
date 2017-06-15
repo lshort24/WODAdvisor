@@ -1,4 +1,4 @@
-import * as dataManager from '../../../services/DataManager';
+import * as dataManager from '../../../services/data_manager';
 
 // Actions
 export const SELECT_PLUS = 'wodadvisor/wod/SELECT_PLUS';

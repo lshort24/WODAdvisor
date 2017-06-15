@@ -5,7 +5,7 @@ import {Button, Panel} from 'react-bootstrap';
 /**
  * Dump component that displays a list of recommended exercises bases on past history of workouts
  */
-export const Recommendations = (props) => {
+const Recommendations = (props) => {
     
     return (
         <Panel header="Recommendations">
@@ -51,3 +51,5 @@ Recommendations.defaultTypes = {
     exercises: [],
     scores: {}
 };
+
+export default Recommendations;

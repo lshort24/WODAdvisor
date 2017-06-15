@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
-import rootReducer from './redux/rootReducer';
+import rootReducer from './redux/root_reducer';
 import {Provider} from 'react-redux';
-import App from './containers/App';
+import App from './containers/app';
 
 // Register Service Worker
 /*

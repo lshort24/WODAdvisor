@@ -1,3 +1,4 @@
+//noinspection ThisExpressionReferencesGlobalObjectJS
 this.addEventListener('install', function(event) {
    var version = 'v3';
 
@@ -14,7 +15,7 @@ this.addEventListener('install', function(event) {
    );
 });
 
-
+//noinspection ThisExpressionReferencesGlobalObjectJS
 this.addEventListener('activate', function(event) {
    var version = 'v3',
        cacheWhitelist = [version];
@@ -35,6 +36,7 @@ this.addEventListener('activate', function(event) {
 });
 
 
+//noinspection ThisExpressionReferencesGlobalObjectJS
 this.addEventListener('fetch', function(event) {
    var version = 'v3';
 

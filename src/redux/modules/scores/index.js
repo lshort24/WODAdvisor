@@ -1,4 +1,4 @@
-import * as dataManager from '../../../services/DataManager';
+import * as dataManager from '../../../services/data_manager';
 import {SAVE_WORKOUT} from '../wod/index';
 
 export default function reducer(state, action) {
