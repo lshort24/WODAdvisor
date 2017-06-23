@@ -10,22 +10,22 @@ const Recommendations = (props) => {
     return (
         <Panel header="Recommendations">
             {
-                props.choices.map(exercise_id => {
+                props.choices.map(exercise => {
                     let debug_info = '';
-                    if (props.scores[exercise_id]) {
+                    if (props.showScores) {
                         debug_info = <span>
-                            &nbsp;<span>score = {props.scores[exercise_id].bodyPartScore}</span>
-                            &nbsp;<span>ago = {props.scores[exercise_id].timeAgo}</span>
+                            &nbsp;<span>score = {exercise.bodyPartScore}</span>
+                            &nbsp;<span>ago = {exercise.timeAgo}</span>
                         </span>;
                     }
                     
                     return (
-                        <div key={exercise_id}>
-                            <Button bsStyle="success" className="plus-button" onClick={() => props.selectPlus(props.exercises[exercise_id])}>
+                        <div key={exercise.id}>
+                            <Button bsStyle="success" className="plus-button" onClick={() => props.selectPlus(exercise)}>
                                 <span className="glyphicon glyphicon-plus" />
                             </Button>
-                            {props.exercises[exercise_id].name}&nbsp;
-                            {props.exercises[exercise_id].bodyParts.map(bodyPart =>
+                            {exercise.name}&nbsp;
+                            {exercise.bodyParts.map(bodyPart =>
                                 <span key={bodyPart.id} className="badge"
                                       style={{backgroundColor: bodyPart.color}}>{bodyPart.name}&nbsp;</span>
                             )}
@@ -41,15 +41,13 @@ const Recommendations = (props) => {
 
 Recommendations.propTypes = {
     choices: PropTypes.array,
-    exercises: PropTypes.array,
-    scores: PropTypes.object,
+    showScores: PropTypes.bool,
     selectPlus: PropTypes.func
 };
 
 Recommendations.defaultTypes = {
     choices: [],
-    exercises: [],
-    scores: {}
+    showScores: false
 };
 
 export default Recommendations;

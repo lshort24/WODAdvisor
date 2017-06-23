@@ -93,15 +93,6 @@ export const getExerciseById = function (id) {
     };
 };
 
-export const getExerciseLookup = function() {
-    let lookup = [];
-    exercises.forEach(function(exercise) {
-        let id = exercise[0];
-        lookup[id] = getExerciseById(id);
-    });
-    return lookup;
-};
-
 export const getHistory = function () {
     //localStorage.removeItem('history');
     const historyJSON = localStorage.getItem('history');
@@ -115,8 +106,9 @@ export const getHistory = function () {
 
 
 export const saveWOD = function(wod) {
-    if (wod) {
-        const wodString = JSON.stringify(wod);
+    if (wod && wod.length > 0) {
+        const ids = wod.map(exercise => exercise.id);
+        const wodString = JSON.stringify(ids);
         localStorage.setItem('wod', wodString);
     }
     else {
@@ -138,34 +130,32 @@ export const saveWorkout = function (wod) {
         }
     }
     
-    wod.forEach(exercise_id => {
+    wod.forEach(exercise => {
         lastHistoryId++;
-        history.push([lastHistoryId, now.format(), exercise_id]);   
+        history.push([lastHistoryId, now.format(), exercise.id]);   
     });
     
     const historyJSON = JSON.stringify(history);
     localStorage.setItem('history', historyJSON);
 };
 
+
+
 export const loadWOD = function() {
+    let wod = [];
     const wodJSON = localStorage.getItem('wod');
     if (wodJSON) {
-        return JSON.parse(wodJSON);
+        wod = JSON.parse(wodJSON).map(exercise_id => {
+            return getExerciseById(exercise_id);
+        });
     }
 
-    return [];
+    return wod;
 };  
 
-export const loadChoices = function () {
-    const wod = loadWOD();
-    return exercises.map(record => {
-        return record[0];   
-    }).filter(id => wod.indexOf(id) < 0)
-};
 
 
-
-export function scoreRecommendations(ids) {
+export function getRecommendations(ids) {
     if (ids && ids.length === 0) {
         // Nothing to do
         return ids;
@@ -232,18 +222,12 @@ export function scoreRecommendations(ids) {
 
         return Object.assign({}, recommendation, {bodyPartScore: maxBodyPartScore})
     });
-    
-    return recommendations;
-}
 
-export function sortRecommendations(ids) {
-    const recommendations = scoreRecommendations(ids);
-    
     // Sort first by body part score then by timeAgo in descending order
     // a == b => 0
     // a < b  => positive value - a should come after b
     // a > b  => negative value - a should come before b
-    let choices = recommendations.sort((a, b) => {
+    recommendations = recommendations.sort((a, b) => {
         if (a.bodyPartScore === b.bodyPartScore) {
             // sort by timeAgo
             return b.timeAgo - a.timeAgo;
@@ -251,10 +235,9 @@ export function sortRecommendations(ids) {
 
         // sort by body part score
         return b.bodyPartScore - a.bodyPartScore;
-    }); 
+    });
     
-    // just return the ids
-    return choices.map(choice => choice.id);
+    return recommendations;
 }
 
 

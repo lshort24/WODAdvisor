@@ -16,14 +16,14 @@ const WorkoutOfTheDay = (props) => {
         return <Panel header="Workout of the Day">
             <div>
                 {
-                    props.wod.map((exercise_id) => {
+                    props.wod.map((exercise) => {
                         return (
-                            <div key={exercise_id}>
-                                <Button bsStyle="danger" className="minus-button" onClick={() => props.selectMinus(props.exercises[exercise_id])}>
+                            <div key={exercise.id}>
+                                <Button bsStyle="danger" className="minus-button" onClick={() => props.selectMinus(exercise)}>
                                     <span className="glyphicon glyphicon-minus" />
                                 </Button>
-                                <span>{props.exercises[exercise_id].name}</span>&nbsp;
-                                {props.exercises[exercise_id].bodyParts.map(bodyPart =>
+                                <span>{exercise.name}</span>&nbsp;
+                                {exercise.bodyParts.map(bodyPart =>
                                     <span key={bodyPart.id} className="badge"
                                           style={{backgroundColor: bodyPart.color}}>{bodyPart.name}</span>
                                 )}
@@ -45,14 +45,12 @@ const WorkoutOfTheDay = (props) => {
 
 WorkoutOfTheDay.propTypes = {
     wod: PropTypes.array,
-    exercises: PropTypes.array,
     selectMinus: PropTypes.func,
     saveWorkout: PropTypes.func
 };
 
 WorkoutOfTheDay.defaultTypes = {
-    wod: [],
-    exercises: []
+    wod: []
 };
 
 export default WorkoutOfTheDay;

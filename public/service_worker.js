@@ -1,6 +1,6 @@
 //noinspection ThisExpressionReferencesGlobalObjectJS
 this.addEventListener('install', function (event) {
-    var version = 'v4';
+    var version = 'v5';
 
     console.log('Installing ' + version + ' ...');
     //noinspection JSUnresolvedFunction, JSUnresolvedVariable
@@ -14,7 +14,7 @@ this.addEventListener('install', function (event) {
                 '/wodadvisor/index.html',
                 '/wodadvisor/logo.png',
                 '/wodadvisor/static/css/main.160e3cd3.css',
-                '/wodadvisor/static/js/main.241b9847.js'
+                '/wodadvisor/static/js/main.e34204f9.js'
 
             ]).catch(function (error) {
                 console.log('Add all failed with ' + error);
@@ -25,7 +25,7 @@ this.addEventListener('install', function (event) {
 
 //noinspection ThisExpressionReferencesGlobalObjectJS
 this.addEventListener('activate', function (event) {
-    var version = 'v4',
+    var version = 'v5',
         cacheWhitelist = [version];
 
     console.log(`Activating ${version}...`);
@@ -49,7 +49,7 @@ this.addEventListener('activate', function (event) {
 
 //noinspection ThisExpressionReferencesGlobalObjectJS
 this.addEventListener('fetch', function (event) {
-    var version = 'v4';
+    var version = 'v5';
 
     //noinspection JSUnresolvedFunction,JSUnresolvedVariable
     event.respondWith(
