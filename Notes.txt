@@ -1,0 +1,31 @@
+Getting Started
+Open a cmd window
+Go to E:
+cd %WODA%
+npm run start
+
+Update dependencies
+npm update
+
+Build for production
+Update the last updated timestamp
+npm run build
+Edit the public version of serviceWorker to update:
+    javascript
+    css
+    version (in three places)
+npm run build again
+
+Push to AWS
+login to aws.amazon.com
+go to S3
+click on wodadvisor
+upload files:
+    js
+    css
+    index.html
+    serviceWorker.js
+source is in E: Documents > PHP Projects > WODAdvisorGit
+Make them public
+
+Go to app:

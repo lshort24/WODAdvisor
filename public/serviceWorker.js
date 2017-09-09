@@ -1,57 +1,51 @@
-this.addEventListener('install', function(event) {
-   var version = 'v3';
+const version = 'v5';
 
-   console.log('Installing ' + version + ' ...');
+self.addEventListener('install', event => {
+   console.log('Installing WOD Advisor service worker version ' + version);
+
+   // add our files to the cache
    event.waitUntil(
-      caches.open(version).then(function(cache) {
+      caches.open(version).then((cache) => {
          return cache.addAll([
             '/wodadvisor/index.html',
-            '/wodadvisor/logo.png'
-         ]).catch(function(error) {
+            '/wodadvisor/logo.png',
+            '/wodadvisor/static/js/main.8f2c09db.js',
+            '/wodadvisor/static/css/main.160e3cd3.css'
+         ]).catch((error) => {
             console.log('Add all failed with ' + error);
          });
       })
    );
 });
 
-
-this.addEventListener('activate', function(event) {
-   var version = 'v3',
-       cacheWhitelist = [version];
-
-   console.log('Activating v2...');
-
+self.addEventListener('activate', event => {
+   // delete any caches that aren't the latest version
    event.waitUntil(
-      caches.keys().then(function(keyList) {
-         return Promise.all(keyList.map(function(key) {
-            console.log('Processing key ' + key);
-            if (cacheWhitelist.indexOf(key) === -1) {
-               console.log('Removing key ' + key + ' from cache');
+      caches.keys().then(keys => Promise.all(
+         keys.map(key => {
+            if (key !== version) {
                return caches.delete(key);
             }
-         }));
+         })
+      )).then(() => {
+         console.log('WOD Advisor service worker now ready to handle fetches!');
       })
    );
 });
 
-
-this.addEventListener('fetch', function(event) {
-   var version = 'v3';
-
+self.addEventListener('fetch', event => {
    event.respondWith(
-      caches.match(event.request).then(function(resp) {
+      caches.match(event.request).then((resp) => {
          if (resp) {
-            console.log('Found ' + event.request.url + ' in the cache.');
+            console.log('Found ' + event.request.url + ' in the WOD Advisor service worker cache.');
          }
-         return resp || fetch(event.request).then(function(response) {
-               return caches.open(version).then(function(cache) {
-                  console.log('Adding ' + event.request.url + ' to the cache.');
-                  cache.put(event.request, response.clone());
-                  return response;
-               });
+         return resp || fetch(event.request).then((response) => {
+            return caches.open(version).then((cache) => {
+               console.log('Adding ' + event.request.url + ' to the WOD Advisor service worker cache.');
+               cache.put(event.request, response.clone());
+               return response;
             });
+         });
       })
    );
 });
-
-

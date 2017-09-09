@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import App from './App';
 
 // Register Service Worker
-/*
+
 if ('serviceWorker' in navigator) {
    navigator.serviceWorker.register('/wodadvisor/serviceWorker.js')
       .then(function(reg) {
@@ -17,7 +17,7 @@ if ('serviceWorker' in navigator) {
       console.log('Registration failed with ' + error);
    });
 }
-*/
+
 
 const store = createStore(rootReducer);
 
