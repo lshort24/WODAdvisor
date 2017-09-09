@@ -1,4 +1,4 @@
-const version = 'v5';
+const version = 'v6';
 
 self.addEventListener('install', event => {
    console.log('Installing WOD Advisor service worker version ' + version);
@@ -9,7 +9,7 @@ self.addEventListener('install', event => {
          return cache.addAll([
             '/wodadvisor/index.html',
             '/wodadvisor/logo.png',
-            '/wodadvisor/static/js/main.8f2c09db.js',
+            '/wodadvisor/static/js/main.52e3fe93.js',
             '/wodadvisor/static/css/main.160e3cd3.css'
          ]).catch((error) => {
             console.log('Add all failed with ' + error);
