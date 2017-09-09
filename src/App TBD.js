@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import WorkoutOfTheDay from './WorkoutOfTheDay';
-import Recommendations from './Recommendations';
+import Recommendations from './recommendations';
 import {Col, Grid, PageHeader, Row } from 'react-bootstrap';
-import "./App.css";
+import "./app.css";
 
 // TODO look into ducks
 class App extends Component {

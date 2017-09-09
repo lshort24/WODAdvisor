@@ -34,6 +34,11 @@ class App extends Component {
                         />
                     </Col>
                 </Row>
+                <Row className="show-grid">
+                    <Col sm={12}>
+                        Last updated 2017-09-09 11:50 AM
+                    </Col>
+                </Row>
             </Grid>
         );
     }
